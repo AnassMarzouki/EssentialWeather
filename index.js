@@ -1,29 +1,49 @@
-fetch('https://my.meteoblue.com/packages/current?apikey=2SHnK4B0jfvPVzXC&lat=34.6805&lon=-1.91781&asl=279&format=json'
-, {method:"GET"})
+//Oujda
+fetch('https://api.weatherapi.com/v1/current.json?key=6b572875ffc0415fb20141806241902&q=Oujda&aqi=no', {method:'GET', headers: {'X-RapidAPI-Key': '6b572875ffc0415fb20141806241902',
+'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'}})
 .then(res => res.json())
 .then(data => {
-    const cityName = 'Oujda'
-    const OujdaTemperature = data.data_current['temperature']
-    const OujdaWindSpeed = data.data_current['windspeed']
+    const cityName = data.location['name']
+    const OujdaTemperature = data.current['temp_c']
+    const OujdaWindSpeed = data.current['wind_kph']
+    const OujdaWindDirection = data.current['wind_dir']
+
+    const OujdaText = data.current.condition['text']
+    const OujdaIcon = data.current.condition['icon']
 
     document.getElementById('meteo-oujda').innerHTML = `
         <h3>📌  ${cityName}</h3>
+        <p>${OujdaText}</p>
         <h3>🌡️  ${OujdaTemperature}°C</h3>
-        <h3>🌬️  ${OujdaWindSpeed}m/s</h3>
+        <h3>🌬️  ${OujdaWindDirection} @ ${OujdaWindSpeed}m/s</h3>
+       
+    `
+    document.getElementById('oujda-icon').innerHTML= `
+    <img src='${OujdaIcon}' class="icons">
     `
 })
 
-fetch('https://my.meteoblue.com/packages/current?apikey=2SHnK4B0jfvPVzXC&lat=32.1054749&lon=-1.2465837&asl=279&format=json', {method:"GET"})
-.then(ans => ans.json())
-.then(weather => {
-    console.log(weather)
-    const fgName = 'Figuig'
-    const figuigTemperature = weather.data_current['temperature']
-    const figuigWindSpeed = weather.data_current['windspeed']
+//Figuig
+fetch('https://api.weatherapi.com/v1/current.json?key=6b572875ffc0415fb20141806241902&q=Figuig&aqi=no', {method:'GET', headers: {'X-RapidAPI-Key': '6b572875ffc0415fb20141806241902',
+'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'}})
+.then(res => res.json())
+.then(datafg => {
+    const fgName = datafg.location['name']
+    const figuigTemperature = datafg.current['temp_c']
+    const figuigWindSpeed = datafg.current['wind_kph']
+    const figuigWindDirection = datafg.current['wind_dir']
+    const figuigText = datafg.current.condition['text']
+    const figuigIcon = datafg.current.condition['icon']
 
     document.getElementById('meteo-figuig').innerHTML = `
-    <h3>📌  ${fgName}</h3>
-    <h3>🌡️  ${figuigTemperature}°C</h3>
-    <h3>🌬️  ${figuigWindSpeed}m/s</h3>
-`
+        <h3>📌  ${fgName}</h3>
+        <p>${figuigText}</p>
+        <h3>🌡️  ${figuigTemperature}°C</h3>
+        <h3>🌬️  ${figuigWindDirection} @ ${figuigWindSpeed}m/s</h3>
+        
+    `
+
+    document.getElementById('figuig-icon').innerHTML= `
+    <img src='${figuigIcon}' class="icons">
+    `
 })
